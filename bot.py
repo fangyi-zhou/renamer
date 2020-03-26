@@ -24,8 +24,13 @@ async def on_message(message):
     match = re.match(RENAME_REGEX, message.content)
     if match:
         name = match[1]
-        await message.channel.send(f"Hello {name}!")
-        await client.http.change_nickname(message.guild.id, message.author.id, name)
+        try:
+            await client.http.change_nickname(message.guild.id, message.author.id, name)
+            await message.channel.send(f"Hello {name}!")
+        except discord.errors.Forbidden:
+            await message.channel.send(
+                f"Hello {name}! I do not have permission to change your name"
+            )
 
 
 client.run(TOKEN)
