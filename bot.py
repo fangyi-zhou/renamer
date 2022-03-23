@@ -8,6 +8,10 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 RENAME_REGEX = re.compile(r"^[Ii]'m (\w+)$")
 
+
+if TOKEN is None:
+    raise RuntimeError("Bot TOKEN not set")
+
 client = discord.Client()
 
 
